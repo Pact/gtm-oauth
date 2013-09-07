@@ -217,6 +217,9 @@ const NSTimeInterval kDefaultNetworkLossTimeoutInterval = 30.0;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:authorizeURL_];
     [auth_ addAuthorizeTokenParamsToRequest:request];
 
+      // gympact: hack for fitbit
+      [auth_ addValue:@"touch" forKey:@"display" toRequest:request];
+
     [delegate_ performSelector:webRequestSelector_
                     withObject:self
                     withObject:request];
