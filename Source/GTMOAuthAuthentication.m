@@ -483,6 +483,9 @@ static NSString *const kUserEmailIsVerifiedKey    = @"isVerified";
   if (screenName) {
     [self setIconURLString:screenName];
   }
+
+    // gympact/fitbit: store response in userdata
+    [self setUserData:dict];
 }
 
 - (void)setKeysForResponseData:(NSData *)data {
@@ -553,6 +556,10 @@ static NSString *const kUserEmailIsVerifiedKey    = @"isVerified";
   [self addParamsForKeys:keys toRequest:request];
 }
 
+-(void)addValue:(id)value forKey:(id)key toRequest:(NSMutableURLRequest *)request {
+    [paramValues_ setObject:value forKey:key];
+    [self addParamsForKeys:@[key] toRequest:request];
+}
 //
 // underlying methods for constructing query parameters or request headers
 //

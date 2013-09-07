@@ -185,6 +185,9 @@ _EXTERN NSString* const kGTMOAuthSignatureMethodRSA_SHA1  _INITIALIZE_AS(@"RSA-S
 - (void)addAccessTokenParamsToRequest:(NSMutableURLRequest *)request;
 - (void)addResourceTokenParamsToRequest:(NSMutableURLRequest *)request;
 
+// gympact: add custom value/key
+-(void)addValue:(id)value forKey:(id)key toRequest:(NSMutableURLRequest *)request;
+
 // parse and set token and token secret from response data
 - (void)setKeysForResponseData:(NSData *)data;
 - (void)setKeysForResponseString:(NSString *)str;
