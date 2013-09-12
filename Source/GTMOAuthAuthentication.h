@@ -33,7 +33,7 @@
 #import <Foundation/Foundation.h>
 
 #ifdef GTL_TARGET_NAMESPACE
-  #import "GTLDefines.h"
+#import "GTLDefines.h"
 #endif
 
 #undef _EXTERN
@@ -74,22 +74,22 @@ _EXTERN NSString* const kGTMOAuthSignatureMethodRSA_SHA1  _INITIALIZE_AS(@"RSA-S
 
 @interface GTMOAuthAuthentication : NSObject {
 @private
-  // paramValues_ contains the parameters used in requests and responses
-  NSMutableDictionary *paramValues_;
-  
-  NSString *realm_;
-  NSString *privateKey_;
-  NSString *timestamp_; // set for testing only
-  NSString *nonce_;     // set for testing only
-  
-  // flag indicating if the token in paramValues is a request token or an
-  // access token
-  BOOL hasAccessToken_;
-  
-  // flag indicating if authorizeRequest: adds a header or parameters
-  BOOL shouldUseParamsToAuthorize_;
-  
-  id userData_;
+    // paramValues_ contains the parameters used in requests and responses
+    NSMutableDictionary *paramValues_;
+
+    NSString *realm_;
+    NSString *privateKey_;
+    NSString *timestamp_; // set for testing only
+    NSString *nonce_;     // set for testing only
+
+    // flag indicating if the token in paramValues is a request token or an
+    // access token
+    BOOL hasAccessToken_;
+
+    // flag indicating if authorizeRequest: adds a header or parameters
+    BOOL shouldUseParamsToAuthorize_;
+
+    id userData_;
 }
 
 // OAuth protocol parameters
@@ -146,7 +146,7 @@ _EXTERN NSString* const kGTMOAuthSignatureMethodRSA_SHA1  _INITIALIZE_AS(@"RSA-S
 
 // userData is retained for the convenience of the caller
 @property (nonatomic, retain) id userData;
-
+@property (nonatomic, retain) id userID;
 
 // Create an authentication object, with hardcoded values for installed apps
 // with HMAC-SHA1 as signature method, and "anonymous" as the consumer key and

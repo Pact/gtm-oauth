@@ -81,63 +81,68 @@
 
 _EXTERN NSString* const kGTLOAuthKeychainErrorDomain       _INITIALIZE_AS(@"com.google.GTMOAuthKeychain");
 
+@protocol GTMOauthViewControllerTouchDelegate <NSObject>
+
+-(void)dismissOAuthView;
+
+@end
 
 @class GTMOAuthSignIn;
 @class GTMOAuthViewControllerTouch;
 
 @interface GTMOAuthViewControllerTouch : UIViewController<UINavigationControllerDelegate, UIWebViewDelegate> {
- @private
-  UIButton *backButton_;
-  UIButton *forwardButton_;
-  UIView *navButtonsView_;
-  UIBarButtonItem *rightBarButtonItem_;
-  UIWebView *webView_;
-  // The object responsible for the sign-in networking sequence; it holds
-  // onto the authentication object as well.
-  GTMOAuthSignIn *signIn_;
+@private
+    UIButton *backButton_;
+    UIButton *forwardButton_;
+    UIView *navButtonsView_;
+    UIBarButtonItem *rightBarButtonItem_;
+    UIWebView *webView_;
+    // The object responsible for the sign-in networking sequence; it holds
+    // onto the authentication object as well.
+    GTMOAuthSignIn *signIn_;
 
-  // the page request to load when awakeFromNib occurs
-  NSURLRequest *request_;
+    // the page request to load when awakeFromNib occurs
+    NSURLRequest *request_;
 
-  // The user we're calling back
-  //
-  // The delegate is retained only until the callback is invoked
-  // or the sign-in is canceled
-  id delegate_;
-  SEL finishedSelector_;
+    // The user we're calling back
+    //
+    // The delegate is retained only until the callback is invoked
+    // or the sign-in is canceled
+    id delegate_;
+    SEL finishedSelector_;
 
 #if NS_BLOCKS_AVAILABLE
-  void (^completionBlock_)(GTMOAuthViewControllerTouch *, GTMOAuthAuthentication *, NSError *);
+    void (^completionBlock_)(GTMOAuthViewControllerTouch *, GTMOAuthAuthentication *, NSError *);
 #endif
 
-  NSString *keychainApplicationServiceName_;
+    NSString *keychainApplicationServiceName_;
 
-  // if non-nil, the html string to be displayed immediately upon opening
-  // of the web view
-  NSString *initialHTMLString_;
+    // if non-nil, the html string to be displayed immediately upon opening
+    // of the web view
+    NSString *initialHTMLString_;
 
-  // if non-nil, the URL for which cookies will be deleted when the
-  // browser view is dismissed
-  NSURL *browserCookiesURL_;
+    // if non-nil, the URL for which cookies will be deleted when the
+    // browser view is dismissed
+    NSURL *browserCookiesURL_;
 
-  id userData_;
+    id userData_;
 
-  // We delegate the decision to our owning NavigationController (if any).
-  // But, the NavigationController will call us back, and ask us.
-  // BOOL keeps us from infinite looping.
-  BOOL isInsideShouldAutorotateToInterfaceOrientation_;
+    // We delegate the decision to our owning NavigationController (if any).
+    // But, the NavigationController will call us back, and ask us.
+    // BOOL keeps us from infinite looping.
+    BOOL isInsideShouldAutorotateToInterfaceOrientation_;
 
-  // YES, when view first shown in this signIn session.
-  BOOL isViewShown_;
+    // YES, when view first shown in this signIn session.
+    BOOL isViewShown_;
 
-  // To prevent us from calling our delegate's selector more than once.
-  BOOL hasCalledFinished_;
+    // To prevent us from calling our delegate's selector more than once.
+    BOOL hasCalledFinished_;
 
-  // Set in a webView callback.
-  BOOL hasDoneFinalRedirect_;
+    // Set in a webView callback.
+    BOOL hasDoneFinalRedirect_;
 
-  // Set during the pop initiated by the sign-in object
-  BOOL isPoppingSelf_;
+    // Set during the pop initiated by the sign-in object
+    BOOL isPoppingSelf_;
 }
 
 // the application and service name to use for saving the auth tokens
@@ -284,8 +289,8 @@ _EXTERN NSString* const kGTLOAuthKeychainErrorDomain       _INITIALIZE_AS(@"com.
 // it too, to store passwords.
 
 enum {
-  kGTLOAuthKeychainErrorBadArguments = -1001,
-  kGTLOAuthKeychainErrorNoPassword = -1002
+    kGTLOAuthKeychainErrorBadArguments = -1001,
+    kGTLOAuthKeychainErrorNoPassword = -1002
 };
 
 
@@ -293,6 +298,7 @@ enum {
 
 + (GTMOAuthKeychain *)defaultKeychain;
 
+#pragma mark Password
 // OK to pass nil for the error parameter.
 - (NSString *)passwordForService:(NSString *)service
                          account:(NSString *)account
@@ -304,10 +310,27 @@ enum {
                            error:(NSError **)error;
 
 // OK to pass nil for the error parameter.
-- (BOOL)setPassword:(NSString *)password
+- (BOOL)setPassword:(NSString *)userID
          forService:(NSString *)service
             account:(NSString *)account
               error:(NSError **)error;
+
+#pragma mark UserID
+// OK to pass nil for the error parameter.
+- (NSString *)userIDForService:(NSString *)service
+                       account:(NSString *)account
+                         error:(NSError **)error;
+
+// OK to pass nil for the error parameter.
+- (BOOL)removeUserIDForService:(NSString *)service
+                       account:(NSString *)account
+                         error:(NSError **)error;
+
+// OK to pass nil for the error parameter.
+- (BOOL)setUserID:(NSString *)userID
+       forService:(NSString *)service
+          account:(NSString *)account
+            error:(NSError **)error;
 
 // For unit tests: allow setting a mock object
 + (void)setDefaultKeychain:(GTMOAuthKeychain *)keychain;
