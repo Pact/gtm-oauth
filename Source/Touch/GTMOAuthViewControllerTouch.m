@@ -427,8 +427,8 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
         isPoppingSelf_ = YES;
         [delegate_ dismissOAuthView];
         //[self.navigationController dismissModalViewControllerAnimated:YES];
-        [self.view setHidden:YES];
-        [self.navigationController.navigationBar setHidden:YES];
+        //[self.view setHidden:YES];
+        //[self.navigationController.navigationBar setHidden:YES];
         isPoppingSelf_ = NO;
     }
 }
