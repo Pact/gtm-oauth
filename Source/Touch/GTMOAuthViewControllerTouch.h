@@ -81,12 +81,6 @@
 
 _EXTERN NSString* const kGTLOAuthKeychainErrorDomain       _INITIALIZE_AS(@"com.google.GTMOAuthKeychain");
 
-@protocol GTMOauthViewControllerTouchDelegate <NSObject>
-
--(void)dismissOAuthView;
-
-@end
-
 @class GTMOAuthSignIn;
 @class GTMOAuthViewControllerTouch;
 
