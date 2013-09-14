@@ -406,7 +406,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
     } else {
         [self constructView];
     }
-    self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(popView)] autorelease];
+    self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(didClickCancel)] autorelease];
     self.navigationItem.rightBarButtonItem = nil;
 }
 
@@ -418,6 +418,12 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
     if ([html length] > 0) {
         [[self webView] loadHTMLString:html baseURL:nil];
     }
+}
+
+-(void)didClickCancel {
+    // cancel nav button clicked
+    NSLog(@"OAuth cancelled");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)popView {
