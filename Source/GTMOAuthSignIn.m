@@ -220,7 +220,10 @@ const NSTimeInterval kDefaultNetworkLossTimeoutInterval = 30.0;
       // gympact: hack for fitbit
       [auth_ addValue:@"touch" forKey:@"display" toRequest:request];
 
-    [delegate_ performSelector:webRequestSelector_
+      // gympact: hack for mapmyfitness
+      [auth_ addValue:auth_.callback forKey:@"oauth_callback" toRequest:request];
+
+      [delegate_ performSelector:webRequestSelector_
                     withObject:self
                     withObject:request];
 
